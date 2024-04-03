@@ -59,14 +59,24 @@
 
 <# 
 
-$VSCode
-$7-Zip
-$adobereaderdc
-$zoomit
-$powertoys
-$MSTeams
+$VSCode = 1
+$7zip = 1
+$adobereaderdc = 1
+$zoomit = 1
+$zoom = 1
+$powertoys = 1
+$MSTeams = 1
 
-#>
+ #>
+
+$AllPkgs = @()
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Visual Studio Code"; PkgName = 'vscode'; Install = $VSCode }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "7-Zip"; PkgName='7zip'; Install = $7zip }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Adobe Reader DC"; PkgName = 'adobereader'; Install = $adobereaderdc }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "ZoomIt"; PkgName = 'zoomit'; Install = $zoomit }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Zoom"; PkgName = 'Zoom'; Install = $zoom }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName="PowerToys"; PkgName='powertoys'; Install = $powertoys }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName="Microsoft Teams (new)"; PkgName='microsoft-teams-new-bootstrapper'; Install = $MSTeams}
 
 #endregion DECLARATIONS
 #region FUNCTIONS
@@ -110,7 +120,7 @@ function Write-ConsoleLog {
     $VerbosePreference = 'Continue'
 
     # Write verbose output
-    Write-Ouutput "$( Get-Date -Format 'MM/dd/yyyy HH:mm:ss' ) - $( $Text )"
+    Write-Output "$( Get-Date -Format 'MM/dd/yyyy HH:mm:ss' ) - $( $Text )"
 
     # Restore current VerbosePreference
     $VerbosePreference = $VerbosePreferenceBefore
@@ -128,15 +138,24 @@ function Install-ChocoPkg {
         # I couldn't find a way to read the package name programmatically using Chocolatey, so it has to be specified manually.
         [Parameter()]
         [string]
-        $FriendlyName = $PkgName
+        $FriendlyName = $PkgName,
+
+        [Parameter()]
+        [int]
+        $Install = 1
     )
     
-    $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
-    if ($Result.Count -eq 0) {
-        Log "$($FriendlyName) ist noch nicht installiert. Starte Installation..."
-        choco install $PkgName --confirm
+    if ($Install -eq 1) {
+        Log "$($FriendlyName) should be installed."
+        $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
+        if ($Result.Count -eq 0) {
+            Log "$($FriendlyName) is not yet installed. Start installation..."
+            choco install $PkgName --confirm
+        } else {
+            Log "$($FriendlyName) is already installed in version $($Result.Version)."
+        }
     } else {
-        Log "$($FriendlyName) ist bereits in Version $($Result.Version) installiert."
+        Log "$($FriendlyName) should NOT be installed."
     }
 }
 
@@ -150,9 +169,9 @@ function Install-ChocoPkg {
 
 # Check if Chocolatey is installed
 if (Get-Command -Name choco.exe -ErrorAction SilentlyContinue) {
-    Log "Chocolatey ist bereits installiert."
+    Log "Chocolatey is already installed."
 } else {
-    Log "Chocolatey ist noch nicht installiert. Starte Installation..."
+    Log "Chocolatey is not installed yet. Start installation..."
     # Install Chocolatey
     Set-ExecutionPolicy Bypass -Scope Process -Force
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -165,60 +184,8 @@ if (Get-Command -Name choco.exe -ErrorAction SilentlyContinue) {
     Install packages
 #>
 
-# Visual Studio Code
-if ($VSCode -eq 1) {
-    Log "Visual Studio Code should be installed."
-    Install-ChocoPkg -PkgName vscode -FriendlyName 'Visual Studio Code'
-} else {
-    Log "Visual Studio Code should not be installed."
-}
-
-# 7-Zip
-if ($7zip -eq 1) {
-    Log "7-Zip should be installed."
-    Install-ChocoPkg -PkgName 7zip -FriendlyName '7-Zip'
-} else {
-    Log "7-Zip should not be installed."
-}
-
-# Adobe Reader DC
-if ($adobereaderdc -eq 1) {
-    Log "Adobe Reader DC should be installed."
-    Install-ChocoPkg -PkgName adobereader -FriendlyName 'Adobe Reader DC'
-} else {
-    Log "Adobe Reader DC should not be installed."
-}
-
-# ZoomIt
-if ($zoomit -eq 1) {
-    Log "ZoomIt should be installed."
-    Install-ChocoPkg -PkgName zoomit -FriendlyName 'ZoomIt'
-} else {
-    Log "ZoomIt should not be installed."
-}
-
-# Zoom
-if ($zoom -eq 1) {
-    Log "Zoom should be installed."
-    Install-ChocoPkg -PkgName zoom -FriendlyName 'Zoom'
-} else {
-    Log "Zoom should not be installed."
-}
-
-# PowerToys
-if ($powertoys -eq 1) {
-    Log "PowerToys should be installed."
-    Install-ChocoPkg -PkgName powertoys -FriendlyName 'PowerToys'
-} else {
-    Log "PowerToys should not be installed."
-}
-
-# Microsoft Teams (neu)
-if ($MSTeams -eq 1) {
-    Log "Microsoft Teams (new) should be installed."
-    Install-ChocoPkg -PkgName microsoft-teams-new-bootstrapper -FriendlyName 'Microsoft Teams (new)'
-} else {
-    Log "Microsoft Teams (new) should not be installed."
+foreach ($pkg in $AllPkgs) {
+    Install-ChocoPkg -PkgName $pkg.PkgName -FriendlyName $pkg.FriendlyName -Install $pkg.Install
 }
 
 #endregion ChocoPkgs
