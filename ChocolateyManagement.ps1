@@ -37,6 +37,7 @@
 
 # The following variables should be set through your rmm solution.
 # If you want to install the package, set the respective variable to 1 (integer). Everything other than 1 will result in the package not being installed.
+# Tip: PowerShell variables are not case sensitive.
 
 <# 
 
@@ -47,6 +48,7 @@ $zoomit = 1
 $zoom = 1
 $powertoys = 1
 $MSTeams = 1
+$PDF24
 
 #>
 
@@ -92,6 +94,24 @@ $AllPkgs += [PSCustomObject]@{
     FriendlyName = "Microsoft Teams (new)"
     PkgName = 'microsoft-teams-new-bootstrapper'
     Install = $MSTeams
+}
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "PDF24"
+    PkgName = 'pdf24'
+    Install = $PDF24
+}
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "VLC media player"
+    PkgName = 'vlc'
+    Install = $VLCmediaplayer
+}
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "TreeSize Free"
+    PkgName = 'treesizefree'
+    Install = $TreeSizeFree
 }
 
 #endregion DECLARATIONS
