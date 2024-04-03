@@ -140,32 +140,39 @@ function Install-ChocoPkg {
     [CmdletBinding()]
     param (
         [Parameter(
-            Mandatory
+            Mandatory,
+            ValueFromPipelineByPropertyName
         )]
         [string]
         $PkgName,
 
         # I couldn't find a way to read the package name programmatically using Chocolatey, so it has to be specified manually.
-        [Parameter()]
+        [Parameter(
+            ValueFromPipelineByPropertyName
+        )]
         [string]
         $FriendlyName = $PkgName,
 
-        [Parameter()]
+        [Parameter(
+            ValueFromPipelineByPropertyName
+        )]
         [int]
         $Install = 1
     )
     
-    if ($Install -eq 1) {
-        Log "$($FriendlyName) should be installed."
-        $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
-        if ($Result.Count -eq 0) {
-            Log "$($FriendlyName) is not yet installed. Start installation..."
-            choco install $PkgName --confirm
+    process {
+        if ($Install -eq 1) {
+            Log "$($FriendlyName) should be installed."
+            $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
+            if ($Result.Count -eq 0) {
+                Log "$($FriendlyName) is not yet installed. Start installation..."
+                choco install $PkgName --confirm
+            } else {
+                Log "$($FriendlyName) is already installed in version $($Result.Version)."
+            }
         } else {
-            Log "$($FriendlyName) is already installed in version $($Result.Version)."
+            Log "$($FriendlyName) should NOT be installed."
         }
-    } else {
-        Log "$($FriendlyName) should NOT be installed."
     }
 }
 
@@ -194,9 +201,7 @@ if (Get-Command -Name choco.exe -ErrorAction SilentlyContinue) {
     Install packages
 #>
 
-foreach ($pkg in $AllPkgs) {
-    Install-ChocoPkg -PkgName $pkg.PkgName -FriendlyName $pkg.FriendlyName -Install $pkg.Install
-}
+$AllPkgs | Install-ChocoPkg
 
 #endregion ChocoPkgs
 #region ChocoUpdate
