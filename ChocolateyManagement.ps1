@@ -51,13 +51,42 @@ $MSTeams = 1
 #>
 
 $AllPkgs = @()
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Visual Studio Code"; PkgName = 'vscode'; Install = $VSCode }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "7-Zip"; PkgName='7zip'; Install = $7zip }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Adobe Reader DC"; PkgName = 'adobereader'; Install = $adobereaderdc }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "ZoomIt"; PkgName = 'zoomit'; Install = $zoomit }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Zoom"; PkgName = 'Zoom'; Install = $zoom }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "PowerToys"; PkgName='powertoys'; Install = $powertoys }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Microsoft Teams (new)"; PkgName='microsoft-teams-new-bootstrapper'; Install = $MSTeams}
+
+$AllPkgs += [PSCustomObject]@{ 
+    FriendlyName = "Visual Studio Code"
+    PkgName = 'vscode'
+    Install = $VSCode 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "7-Zip"
+    PkgName='7zip'
+    Install = $7zip 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "Adobe Reader DC"
+    PkgName = 'adobereader'
+    Install = $adobereaderdc 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "ZoomIt"
+    PkgName = 'zoomit'
+    Install = $zoomit 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "Zoom"
+    PkgName = 'Zoom'
+    Install = $zoom 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "PowerToys"
+    PkgName = 'powertoys'
+    Install = $powertoys 
+}
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "Microsoft Teams (new)"
+    PkgName = 'microsoft-teams-new-bootstrapper'
+    Install = $MSTeams
+}
 
 #endregion DECLARATIONS
 #region FUNCTIONS
