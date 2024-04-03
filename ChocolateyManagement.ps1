@@ -48,7 +48,7 @@ $zoom = 1
 $powertoys = 1
 $MSTeams = 1
 
- #>
+#>
 
 $AllPkgs = @()
 $AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Visual Studio Code"; PkgName = 'vscode'; Install = $VSCode }
@@ -56,8 +56,8 @@ $AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "7-Zip"; P
 $AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Adobe Reader DC"; PkgName = 'adobereader'; Install = $adobereaderdc }
 $AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "ZoomIt"; PkgName = 'zoomit'; Install = $zoomit }
 $AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Zoom"; PkgName = 'Zoom'; Install = $zoom }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName="PowerToys"; PkgName='powertoys'; Install = $powertoys }
-$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName="Microsoft Teams (new)"; PkgName='microsoft-teams-new-bootstrapper'; Install = $MSTeams}
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "PowerToys"; PkgName='powertoys'; Install = $powertoys }
+$AllPkgs += New-Object -TypeName psobject -Property @{ FriendlyName = "Microsoft Teams (new)"; PkgName='microsoft-teams-new-bootstrapper'; Install = $MSTeams}
 
 #endregion DECLARATIONS
 #region FUNCTIONS
