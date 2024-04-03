@@ -5,24 +5,11 @@
 .DESCRIPTION
     Script to be used in (e. g.) remote monitoring and management solutions to automatically install and update software.
 
-.SYNTAX
-
-
-.PARAMETERS
-
-
-.EXAMPLE
-    PS C:\> <example usage>
-    Explanation of what the example does
-
 .INPUTS
-    None. Parameters are supposed to be set by the rmm solution this script is used in.
+    No parameters. Variables are supposed to be set by the rmm solution this script is used in.
 
 .OUTPUTS
-    Exit Codes:
-    0 = Successfull
-    1 = Error
-    2 = Warning
+    None
 
 .RELATED LINKS
     GitHub: https://github.com/MichaelSchoenburg/ChocolateyManagement
