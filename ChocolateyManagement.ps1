@@ -44,11 +44,7 @@
 $VSCode = 1
 $7zip = 1
 $adobereaderdc = 1
-$zoomit = 1
-$zoom = 1
-$powertoys = 1
-$MSTeams = 1
-$PDF24
+...
 
 #>
 
