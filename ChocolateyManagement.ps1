@@ -57,31 +57,37 @@ $AllPkgs += [PSCustomObject]@{
     PkgName = 'vscode'
     Install = $VSCode 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "7-Zip"
     PkgName='7zip'
     Install = $7zip 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "Adobe Reader DC"
     PkgName = 'adobereader'
     Install = $adobereaderdc 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "ZoomIt"
     PkgName = 'zoomit'
     Install = $zoomit 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "Zoom"
     PkgName = 'Zoom'
     Install = $zoom 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "PowerToys"
     PkgName = 'powertoys'
     Install = $powertoys 
 }
+
 $AllPkgs += [PSCustomObject]@{
     FriendlyName = "Microsoft Teams (new)"
     PkgName = 'microsoft-teams-new-bootstrapper'
