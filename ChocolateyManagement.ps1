@@ -214,6 +214,7 @@ $AllPkgs | Install-ChocoPkg
 <# 
     Update all packages
 #>
+
 Log 'Updating all packages...'
 choco upgrade all --confirm
 
