@@ -22,12 +22,6 @@
     This projects code loosely follows the PowerShell Practice and Style guide, as well as Microsofts PowerShell scripting performance considerations.
     Style guide: https://poshcode.gitbook.io/powershell-practice-and-style/
     Performance Considerations: https://docs.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.1
-
-.REMARKS
-    To see the examples, type: "get-help Get-HotFix -examples".
-    For more information, type: "get-help Get-HotFix -detailed".
-    For technical information, type: "get-help Get-HotFix -full".
-    For online help, type: "get-help Get-HotFix -online"
 #>
 
 #region INITIALIZATION
