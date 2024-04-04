@@ -110,6 +110,29 @@ $AllPkgs += [PSCustomObject]@{
     Install = $TreeSizeFree
 }
 
+# Hint regarding Visual Studio Code PowerShell Extension from the author Pascal Berger:
+# Unfortunately it is not possible to install a specific version of an extension through the Visual Studio Code CLI. 
+# Therefore this package always installs the latest version of the extension 
+# and the extension afterwards needs to be updated through the Visual Studio Code extension manager.
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "Visual Studio Code PowerShell Extension"
+    PkgName = 'vscode-powershell'
+    Install = $VSCodePowerShell
+}
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "WinSCP"
+    PkgName = 'winscp.install'
+    Install = $WinSCP
+}
+
+$AllPkgs += [PSCustomObject]@{
+    FriendlyName = "PowerShell 7"
+    PkgName = 'powershell-core'
+    Install = $PS7
+}
+
 #endregion DECLARATIONS
 #region FUNCTIONS
 <# 
