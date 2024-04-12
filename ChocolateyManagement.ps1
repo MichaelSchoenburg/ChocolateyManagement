@@ -36,14 +36,14 @@
 #>
 
 # The following variables should be set through your rmm solution.
-# If you want to install the package, set the respective variable to 1 (integer). Everything other than 1 will result in the package not being installed.
+# If you want to install the package, set the respective variable to 1 (integer). If you want to uninstall the package, set the respective variable to 0 (integer). Everything other than 0 or 1 will result in the package not being installed, but ignored.
 # Tip: PowerShell variables are not case sensitive.
 
 <# 
 
-$VSCode = 1
-$7zip = 1
-$adobereaderdc = 1
+$VSCode = 1             # Will be installed
+$7zip = 0               # Will be uninstalled
+$adobereaderdc = $null  # Will be ignored thus not installed or uninstalled
 ...
 
 #>
@@ -214,6 +214,15 @@ function Install-ChocoPkg {
                 choco install $PkgName --confirm
             } else {
                 Log "$($FriendlyName) is already installed in version $($Result.Version)."
+            }
+        } elseif ($Install -eq 0) {
+            Log "$($FriendlyName) should be uninstalled."
+            $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
+            if ($Result.Count -eq 0) {
+                Log "$($FriendlyName) is not even installed. Skipping..."
+            } else {
+                Log "$($FriendlyName) is installed in version $($Result.Version). Uninstalling..."
+                choco uninstall $PkgName --confirm
             }
         } else {
             Log "$($FriendlyName) should NOT be installed."
