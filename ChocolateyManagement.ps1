@@ -41,8 +41,8 @@
 
 <# 
 
-$NoVSCodeDesktopIcon = 1 # Will not create a desktop icon for Visual Studio Code
-$NoVSCodeDesktopIcon = 0 # Will create a desktop icon for Visual Studio Code
+$VSCodeNoDesktopIcon = 1 # Will not create a desktop icon for Visual Studio Code
+$VSCodeNoDesktopIcon = 0 # Will create a desktop icon for Visual Studio Code
 
 $VSCode = 1             # Will be installed
 $7zip = 0               # Will be uninstalled
