@@ -41,6 +41,9 @@
 
 <# 
 
+$NoVSCodeDesktopIcon = 1 # Will not create a desktop icon for Visual Studio Code
+$NoVSCodeDesktopIcon = 0 # Will create a desktop icon for Visual Studio Code
+
 $VSCode = 1             # Will be installed
 $7zip = 0               # Will be uninstalled
 $adobereaderdc = $null  # Will be ignored thus not installed or uninstalled
@@ -211,7 +214,11 @@ function Install-ChocoPkg {
             $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
             if ($Result.Count -eq 0) {
                 Log "$($FriendlyName) is not yet installed. Start installation..."
-                choco install $PkgName --confirm
+                if (($PkgName = $AllPkgs.where({$_.FriendlyName -like '*Visual*Studio*Code*'}).PkgName) -and ($NoVSCodeDesktopIcon -eq 1)) {
+                    choco install $PkgName --params '/NoDesktopIcon' --confirm
+                } else {
+                    choco install $PkgName --confirm
+                }
             } else {
                 Log "$($FriendlyName) is already installed in version $($Result.Version)."
             }
