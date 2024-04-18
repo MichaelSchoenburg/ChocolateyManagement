@@ -56,7 +56,12 @@ $AllPkgs = @()
 $AllPkgs += [PSCustomObject]@{ 
     FriendlyName = "Visual Studio Code"
     PkgName = 'vscode'
-    Install = $VSCode 
+    Install = $VSCode
+    Arguments = if ($VSCodeNoDesktopIcon -eq 1) {
+        '/NoDesktopIcon'
+    } else {
+        $null
+    }
 }
 
 $AllPkgs += [PSCustomObject]@{
@@ -205,7 +210,13 @@ function Install-ChocoPkg {
             ValueFromPipelineByPropertyName
         )]
         [int]
-        $Install = 1
+        $Install = 1,
+
+        [Parameter(
+            ValueFromPipelineByPropertyName
+        )]
+        [string]
+        $Arguments
     )
     
     process {
@@ -214,8 +225,8 @@ function Install-ChocoPkg {
             $Result = choco list --limit-output --exact $PkgName | ConvertFrom-Csv -delimiter "|" -Header Id, Version
             if ($Result.Count -eq 0) {
                 Log "$($FriendlyName) is not yet installed. Start installation..."
-                if (($PkgName = $AllPkgs.where({$_.FriendlyName -like '*Visual*Studio*Code*'}).PkgName) -and ($NoVSCodeDesktopIcon -eq 1)) {
-                    choco install $PkgName --params '/NoDesktopIcon' --confirm
+                if ($Arguments) {
+                    choco install $PkgName --params $Arguments --confirm
                 } else {
                     choco install $PkgName --confirm
                 }
